@@ -52,7 +52,7 @@ public class ArrayListTest02 {
 		// 밑에 두개는 수업때 안함
 		System.out.println("---- 방법5 ----");
 		for (String str : nameList) {
-			if (str.contains("김")) {
+			if (str.contains("김")) { // "김"이 포함되면 true라서 적절하지 않음
 				System.out.println(str);
 			}
 		}

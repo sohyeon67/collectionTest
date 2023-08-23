@@ -51,7 +51,7 @@ public class StackQueueTest {
 		-  Queue의 명령
 		1. 자료 입력 : offer(입력값)
 		2. 자료 출력 : poll() ==> 자료를 꺼내오고 꺼내온 자료를 Queue에서 삭제한다.
-		 		   peek() ==> 삭제없이 자료를 꺼내온다.
+					peek() ==> 삭제없이 자료를 꺼내온다.
 		*/
 		Queue<String> queue = new LinkedList<String>();
 		

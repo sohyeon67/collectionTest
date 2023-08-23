@@ -27,7 +27,7 @@ public class ArrayListTest03 {
 		
 		
 		// 제일 긴 별명이 저장될 변수 선언 ==> 이 변수는 List의 첫번째 데이터로 초기화 한다.
-		String maxAlias = aliasList.get(0); // Initialize maxAlias with the first alias
+		String maxAlias = aliasList.get(0);
 
 		for (int i = 1; i < aliasList.size(); i++) {
 			if (maxAlias.length() < aliasList.get(i).length()) {

@@ -87,7 +87,7 @@ public class ArrayListTest01 {
 		// toArray(new 제네릭타입이름[0]) ==> 제네릭타입의 배열로 변환해서 반환한다.
 
 		Object[] strArr = list2.toArray();
-		//String[] strArr = (String[])list2.toArray(); // Object배열을 String 배열로 변환 못함. 이 방법은 사용할 수 없다.?????
+		//String[] strArr = (String[])list2.toArray(); // Object배열을 String 배열로 변환 못함. 이 방법은 사용할 수 없다.
 		System.out.println("list의 개수 : " + list2.size());
 		System.out.println("배열의 개수 : " + strArr.length);
 
@@ -98,6 +98,8 @@ public class ArrayListTest01 {
 		
 		// 제네릭 타입의 배열로 변환해서 가져오기
 		String[] strArr2 = list2.toArray(new String[0]);
+		// 변환하려는 타입의 배열을 생성해 인자로 넘겨줌
+		// toArray() 메서드가 필요한 크기로 배열을 자동으로 생성하고 요소를 복사
 		
 		for(String s : strArr2) {
 			System.out.println(s);

@@ -79,8 +79,7 @@ public class VectorTest {
 
 		System.out.println("123 삭제 후 v1 ==>" + v1);
 
-		// v1.remove('a'); // ArrayIndexOutOfBoundsException: Array index out of range:
-		// 97
+		// v1.remove('a'); // ArrayIndexOutOfBoundsException: Array index out of range: 97
 		v1.remove(Character.valueOf('a'));
 		System.out.println("삭제 후 v1 ==> " + v1);
 
@@ -98,11 +97,12 @@ public class VectorTest {
 
 		// -----------------------------------------------------------
 		/*
-		 * 제네릭타입(Generic Type) ==> 클래스 내부에서 사용할 데이터 타입을 객체를 생성할 때 외부에서 지정해 주는 기법으로 객체를
-		 * 선언할 때 괄호(< >)안에 그 객체의 내부에서 사용할 데이터의 타입을 지정해 주는 것을 말한다. - 이런 식으로 선언하게 되면 그 데이터
-		 * 타입 이외의 다른 종류의 데이터를 저장할 수 없다. - 이 때 제네릭으로 선언될 수 있는 데이터 타입은 클래스형 이어야 한다. 그래서
-		 * int는 Integer, boolean은 Boolean, char는 Character 등으로 대체해서 사용해야 한다. - 제네릭 타입으로
-		 * 선언하게 되면 데이터를 꺼내올 때 별도의 형변환이 필요없다.
+		  제네릭타입(Generic Type) ==> 클래스 내부에서 사용할 데이터 타입을 객체를 생성할 때 외부에서 지정해 주는 기법으로 객체를
+		  선언할 때 괄호(< >)안에 그 객체의 내부에서 사용할 데이터의 타입을 지정해 주는 것을 말한다. 
+		  - 이런 식으로 선언하게 되면 그 데이터 타입 이외의 다른 종류의 데이터를 저장할 수 없다. 
+		  - 이 때 제네릭으로 선언될 수 있는 데이터 타입은 클래스형 이어야 한다. 
+		  	그래서 int는 Integer, boolean은 Boolean, char는 Character 등으로 대체해서 사용해야 한다. 
+		  - 제네릭 타입으로 선언하게 되면 데이터를 꺼내올 때 별도의 형변환이 필요없다.
 		 */
 		Vector<Integer> v2 = new Vector<Integer>(); // int형 자료만 저장할 수 있는 Vector
 		Vector<String> v3 = new Vector<String>(); // String형 자료만 저장할 수 있는 Vector
