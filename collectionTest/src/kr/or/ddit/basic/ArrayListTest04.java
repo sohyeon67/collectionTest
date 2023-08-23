@@ -5,38 +5,43 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
 
+/*
+  문제2) 5명의 별명을 입력 받아 ArrayList에 추가한 후 이들 중
+	 	별명의 길이가 제일 긴 별명을 출력하시오.
+	 	(단, 각 별명의 길이는 같은 것이 있을 수 있다.)
+ */
+
 public class ArrayListTest04 {
 
 	public static void main(String[] args) {
-		ArrayList<String> nameList = new ArrayList<String>();
 		Scanner sc = new Scanner(System.in);
-		ArrayList<Integer> longNameIndex = new ArrayList<Integer>();
-		int maxLength = 0;
 
-		for (int i = 0; i < 5; i++) {
-			System.out.print((i + 1) + "번째 별명 >> ");
-			nameList.add(sc.nextLine());
+		ArrayList<String> aliasList = new ArrayList<String>();
+
+		for (int i = 1; i <= 5; i++) {
+			System.out.print(i + "번째 별명 >> ");
+			aliasList.add(sc.nextLine());
 		}
 
-		maxLength = nameList.get(0).length();
+		System.out.println();
+
+		// 제일 긴 별명의 길이가 저장될 변수 선언 ==> 이 변수는 첫번재 데이터의 길이로 초기화 한다.
+		int maxLength = aliasList.get(0).length();
 
 		// 최대 길이
-		for (int i = 1; i < nameList.size(); i++) {
-			if (maxLength < nameList.get(i).length()) {
-				maxLength = nameList.get(i).length();
+		for (int i = 1; i < aliasList.size(); i++) {
+			if (maxLength < aliasList.get(i).length()) {
+				maxLength = aliasList.get(i).length();
 			}
 		}
 		
-		// 최대 길이인 애들
-		for(int i=0; i<nameList.size(); i++) {
-			if(nameList.get(i).length()==maxLength) {
-				longNameIndex.add(i);
-			}
-		}
-		
+		// 나는 길이가 긴(같은) 인덱스만 따로 모아서 저장했었는데 그럴 필요가 없음
+
 		System.out.println("-- 제일 긴 별명 --");
-		for(int i=0; i<longNameIndex.size(); i++) {
-			System.out.println(nameList.get(longNameIndex.get(i)));
+		for (int i = 0; i < aliasList.size(); i++) {
+			if(maxLength == aliasList.get(i).length()) {
+				System.out.println(aliasList.get(i));
+			}
 		}
 
 	}

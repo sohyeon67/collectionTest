@@ -8,7 +8,6 @@ import java.util.Scanner;
 	 	별명의 길이가 제일 긴 별명을 출력하시오.
 	 	(단, 각 별명의 길이는 모두 다르게 입력한다.)
 	 	
-	 문제2) 문제1에서 입력할 때 각 별명의 길이가 같은 것이 있을 경우에 대하여 처리하시오.
 */
 
 public class ArrayListTest03 {
@@ -17,25 +16,25 @@ public class ArrayListTest03 {
 		Scanner sc = new Scanner(System.in);
 		
 		ArrayList<String> aliasList = new ArrayList<String>();
-		String longName = null;
-		int maxLength = 0;
-
-		for (int i = 0; i < 5; i++) {
-			System.out.print((i + 1) + "번째 별명 >> ");
+		//int maxLength = 0; maxAlias의 길이를 사용하면 되므로 필요 없음
+		
+		for (int i = 1; i <= 5; i++) {
+			System.out.print(i + "번째 별명 >> ");
 			aliasList.add(sc.nextLine());
 		}
 
-		maxLength = aliasList.get(0).length();
+		System.out.println();
+		
+		
+		// 제일 긴 별명이 저장될 변수 선언 ==> 이 변수는 List의 첫번째 데이터로 초기화 한다.
+		String maxAlias = aliasList.get(0); // Initialize maxAlias with the first alias
 
 		for (int i = 1; i < aliasList.size(); i++) {
-			if (maxLength < aliasList.get(i).length()) {
-				maxLength = aliasList.get(i).length();
-				longName = aliasList.get(i);
+			if (maxAlias.length() < aliasList.get(i).length()) {
+				maxAlias = aliasList.get(i);
 			}
 		}
 
-		System.out.println("제일 긴 별명 : " + longName);
-
+		System.out.println("제일 긴 별명 : " + maxAlias);
 	}
-
 }
