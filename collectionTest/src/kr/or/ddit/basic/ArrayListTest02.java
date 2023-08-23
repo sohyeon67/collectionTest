@@ -24,7 +24,7 @@ public class ArrayListTest02 {
 
 		System.out.println("---- 방법1 ----");
 		for (int i = 0; i < nameList.size(); i++) {
-			if (nameList.get(i).substring(0, 1).equals("김")) {
+			if (nameList.get(i).substring(0, 1).equals("김")) { // 문자열 비교 equals()
 				System.out.println(nameList.get(i));
 			}
 		}
