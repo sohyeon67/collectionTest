@@ -1,5 +1,6 @@
 package kr.or.ddit.basic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -81,6 +82,27 @@ public class SetTest {
 		System.out.println("향상된 for문 이용하기");
 		for(Object obj : hs1) {
 			System.out.println(obj);
+		}
+		
+		// 우리반 학생들 중 번호를 이용하여 추첨하는 프로그램을 작성해 보자
+		// 번호는 1번부터 23번까지 있고, 추첨할 인원은 3명이다.
+		// 당첨 번호를 출력해 보시오.
+		
+		// 최소값부터 최대값 사이의 정수형 난수값 만들기
+		// (int)(Math.random() * (최대값-최소값+1) + 최소값)
+		
+		HashSet<Integer> testSet = new HashSet<Integer>();
+		while(testSet.size() < 3) {
+			testSet.add((int)(Math.random() * 23 + 1)); // 중복값 추가 x
+		}
+		System.out.println("당첨자 번호 : " + testSet);
+		System.out.println();
+		
+		// Set유형의 자료를 List형으로 변환하기
+		ArrayList<Integer> testList = new ArrayList<Integer>(testSet);
+		System.out.println("List 데이터 출력...");
+		for(int i=0; i<testList.size(); i++) {
+			System.out.println(i + "번째 자료 ==> " + testList.get(i));
 		}
 		
 	}
