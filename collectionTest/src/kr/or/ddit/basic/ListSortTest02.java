@@ -31,11 +31,21 @@ public class ListSortTest02 {
 		for (Member mem : memList) {
 			System.out.println(mem);
 		}
+		System.out.println("-----------------------------------------------");
+		
+		Collections.sort(memList); // 내부 정렬 기준 추가해야 에러가 뜨지 않음
+		System.out.println("name의 오름차순 정렬후...");
+		for (Member mem : memList) {
+			System.out.println(mem);
+		}
+		System.out.println("-----------------------------------------------");
+		
 	}
 
 }
 
-class Member {
+// Member의 회원이름을 기준으로 오름차순이 되도록 내부 정렬 기준 추가하기
+class Member implements Comparable<Member> {
 	private int num;
 	private String name;
 	private String tel;
@@ -78,6 +88,22 @@ class Member {
 		return "Member [num=" + num + ", name=" + name + ", tel=" + tel + "]";
 	}
 
+	// 내부 정렬 기준을 정해주는 메서드 (name의 오름차순 정렬 기준 만들기)
+	@Override
+	public int compareTo(Member mem) {
+		/*		
+		if(this.getName().compareTo(mem.getName()) > 0) {
+			return 1;
+		} else if(this.getName().compareTo(mem.getName()) < 0) {
+			return -1;
+		} else {
+			return 0;
+		}
+		*/
+		
+		return this.getName().compareTo(mem.getName());
+	}
+	
 }
 
 class SortNumDesc implements Comparator<Member> { // Member를 정렬
@@ -91,23 +117,35 @@ class SortNumDesc implements Comparator<Member> { // Member를 정렬
 	// 예) 오름차순 정렬일 경우 ==> 앞의 값이 크면 양수, 같으면 0, 앞의 값이 작으면 음수를 반환하도록 구현하면 된다.
 
 	@Override
-	public int compare(Member o1, Member o2) {
-		// 내림차순
-		// compareTo() 메서드 사용
-//		if(Integer.valueOf(o1.getNum()).compareTo(o2.getNum()) > 0) {
-//			return -1;
-//		} else if(Integer.valueOf(o1.getNum()).compareTo(o2.getNum()) < 0) {
-//			return 1;
-//		} else {
-//			return 0;
-//		}
-
-		if (o1.getNum() > o2.getNum()) {
+	public int compare(Member mem1, Member mem2) { // 내림차순
+		
+		// 직접 비교하는 방법
+		/*
+		if (mem1.getNum() > mem2.getNum()) {
 			return -1;
-		} else if (o1.getNum() < o2.getNum()) {
+		} else if (mem1.getNum() < mem2.getNum()) {
 			return 1;
 		} else {
 			return 0;
 		}
+		*/
+		
+		
+		// Wrapper클래스를 이용하는 방법1
+		// return new Integer(mem1.getNum()).compareTo(mem2.getNum()) * -1;
+		
+		
+		// Wrapper클래스를 이용하는 방법2
+		/*
+		if(Integer.valueOf(o1.getNum()).compareTo(o2.getNum()) > 0) {
+			return -1;
+		} else if(Integer.valueOf(o1.getNum()).compareTo(o2.getNum()) < 0) {
+			return 1;
+		} else {
+			return 0;
+		}
+		*/
+		return Integer.compare(mem1.getNum(), mem2.getNum()) * -1;
+		
 	}
 }
