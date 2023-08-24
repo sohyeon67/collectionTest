@@ -62,6 +62,7 @@ class Desc implements Comparator<String> {
 	@Override
 	public int compare(String str1, String str2) {
 		// 내림 차순으로 구현하려고 한다.
+		/*
 		if(str1.compareTo(str2) > 0) {
 			return -1;
 		} else if(str1.compareTo(str2) < 0) {
@@ -69,5 +70,7 @@ class Desc implements Comparator<String> {
 		} else {
 			return 0;
 		}
+		*/
+		return str1.compareTo(str2) * -1;
 	}
 }
