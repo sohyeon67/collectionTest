@@ -99,10 +99,10 @@ public class LottoTest {
 	}
 
 	public void buy() {
-		
-		System.out.println("    Lotto 구입 시작");
 		System.out.println();
-		System.out.println("      (1000원에 로또번호 하나입니다.)");
+		System.out.println("Lotto 구입 시작");
+		System.out.println();
+		System.out.println("(1000원에 로또번호 하나입니다.)");
 		System.out.print("금액 입력 : ");
 		int coin = Integer.parseInt(scan.nextLine());
 		int change = 0;
@@ -124,11 +124,19 @@ public class LottoTest {
 
 			for (int i = 1; i <= count; i++) {
 				createNum();
-				System.out.println("로또번호" + i + " : " + numList);
+//				System.out.println("로또번호" + i + " : " + numList);
+		        System.out.print("로또번호" + i + " : ");
+		        for (int j = 0; j < numList.size(); j++) {
+		            System.out.print(numList.get(j));
+		            if (j < numList.size() - 1) {
+		                System.out.print(","); // 마지막 숫자 뒤에 쉼표를 넣지 않음
+		            }
+		        }
+		        System.out.println(); // 줄바꿈
 			}
 			
 			System.out.println();
-			System.out.println("받은 금액은 " + coin + "이고 거스름돈은 " + change + "입니다.");
+			System.out.println("받은 금액은 " + coin + "원이고 거스름돈은 " + change + "원입니다.");
 		}
 		System.out.println();
 
