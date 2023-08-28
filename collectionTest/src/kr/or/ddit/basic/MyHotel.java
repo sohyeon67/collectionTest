@@ -1,5 +1,7 @@
 package kr.or.ddit.basic;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -319,17 +321,14 @@ public class MyHotel {
 		System.out.println("----------------------------------------------");
 
 		Set<Integer> hotelSet = hotelMap.keySet();
-		Iterator<Integer> it = hotelSet.iterator();
-		while (it.hasNext()) {
-			int key = it.next();
+		
+		ArrayList<Integer> hotelList = new ArrayList<Integer>(hotelSet);
+		
+		Collections.sort(hotelList);
+		for(int key : hotelList) {
 			Room r = hotelMap.get(key);
-
 			System.out.println(r.getRoomNum() + "\t" + r.getRoomType() + "\t" + r.getName());
 		}
-//
-//		for(int key: hotelMap.keySet()) {
-//			syso
-//		}
 	}
 
 	private void checkOut() {
