@@ -77,98 +77,101 @@ import java.util.Set;
  */
 
 public class LottoTest {
-	private ArrayList<Integer> numList; // 난수가 저장될 리스트
 
 	private Scanner scan = new Scanner(System.in);
 
-	// 1 ~ 45 사이의 서로 다른 난수 6개를 만들어서 리스트에 저장하는 메서드 (Set 이용)
-	public void createNum() {
-		Set<Integer> numSet = new HashSet<Integer>();
-
-		// 난수 6개 만들기
-		while (numSet.size() < 6) {
-			numSet.add((int) (Math.random() * 45 + 1));
-		}
-
-		// 만들어진 난수를 List에 저장한다.
-		numList = new ArrayList<Integer>(numSet);
-
-		// List의 데이터를 섞어준다.
-		Collections.shuffle(numList);
-
+	public static void main(String[] args) {
+		new LottoTest().startLottoStore();
 	}
 
-	public void buy() {
+	// 시작 메서드
+	public void startLottoStore() {
+		while (true) {
+			int choice = displayMenu();
+
+			switch (choice) {
+			case 1: // 구입
+				buyLotto();
+				break;
+			case 2:
+				System.out.println();
+				System.out.println("감사합니다");
+				return;
+			default:
+				System.out.println("작업 번호를 잘못 입력했습니다...");
+				System.out.println("작업 번호는 '1' 또는 '2'를 입력하세요...");
+			}
+		}
+	}
+
+	// 로또 구입을 처리하는 메서드
+	private void buyLotto() {
 		System.out.println();
 		System.out.println("Lotto 구입 시작");
 		System.out.println();
 		System.out.println("(1000원에 로또번호 하나입니다.)");
 		System.out.print("금액 입력 : ");
-		int coin = Integer.parseInt(scan.nextLine());
-		int change = 0;
-		int count = 0;
+		int money = scan.nextInt();
 
-		if (coin < 1000) {
+		
+		if (money < 1000) { // 입력 금액이 1000원 미만 여부 검사
 			System.out.println();
 			System.out.println("입력 금액이 너무 적습니다. 로또번호 구입 실패!!!");
-		} else if (coin >= 101000) {
+			return;
+		} else if (money >= 101000) { // 입력 금액이 101000원 이상 여부 검사
 			System.out.println();
 			System.out.println("입력 금액이 너무 많습니다. 로또번호 구입 실패!!!");
-		} else {
+			return;
+		}
+		
+		// -----------------------------
+		// 금액에 맞는 로또 번호 만들기
+		HashSet<Integer> lottoSet = new HashSet<Integer>();
+		
+		// 입력한 금액을 이용하여 구입할 로또의 매수를 구한다.
+		int count = money / 1000;
 
-			count = coin / 1000;
-			change = coin % 1000;
+		System.out.println();
+		System.out.println("행운의 로또번호는 아래와 같습니다.");
 
-			System.out.println();
-			System.out.println("행운의 로또번호는 아래와 같습니다.");
-
-			for (int i = 1; i <= count; i++) {
-				createNum();
-//				System.out.println("로또번호" + i + " : " + numList);
-		        System.out.print("로또번호" + i + " : ");
-		        for (int j = 0; j < numList.size(); j++) {
-		            System.out.print(numList.get(j));
-		            if (j < numList.size() - 1) {
-		                System.out.print(","); // 마지막 숫자 뒤에 쉼표를 넣지 않음
-		            }
-		        }
-		        System.out.println(); // 줄바꿈
+		for (int i = 1; i <= count; i++) { // 로또의 매수만큼 반복
+			// 1장 분의 로또번호를 만든다. (1~45 사이의 중복되지 않는 번호 6개 만들기)
+			while(lottoSet.size()<6) {
+				lottoSet.add((int) (Math.random() * 45 + 1));
 			}
 			
-			System.out.println();
-			System.out.println("받은 금액은 " + coin + "원이고 거스름돈은 " + change + "원입니다.");
-		}
+			// Set에 저장된 로또번호를 갖는 List객체 생성
+			ArrayList<Integer> lottoList = new ArrayList<Integer>(lottoSet);
+			
+			Collections.sort(lottoList);
+			
+			System.out.println("로또번호 " + i + " : " + lottoList);
+			
+			// 작업에 사용한 Set객체를 비워준다.
+			lottoSet.clear();
+			
+		} // for문 끝...
+		
+		// 거스름돈 계산 및 출력
+		System.out.println();
+		System.out.println("받은 금액은 " + money + "원이고 거스름돈은 " 
+					+ (money % 1000) + "원입니다.");
+
 		System.out.println();
 
 	}
 
-	public void home() {
-		while (true) {
-			System.out.println("==========================");
-			System.out.println("        Lotto 프로그램");
-			System.out.println("--------------------------");
-			System.out.println("  1. Lotto 구입");
-			System.out.println("  2. 프로그램 종료");
-			System.out.println("==========================");
+	// 메뉴 출력 및 작업번호를 입력 받아 반환하는 메서드
+	private int displayMenu() {
+		System.out.println("==========================");
+		System.out.println("        Lotto 프로그램");
+		System.out.println("--------------------------");
+		System.out.println("  1. Lotto 구입");
+		System.out.println("  2. 프로그램 종료");
+		System.out.println("==========================");
+		System.out.print("메뉴 선택 >> ");
 
-			System.out.print("메뉴 선택 >> ");
-
-			switch (Integer.parseInt(scan.nextLine())) {
-			case 1:
-				buy();
-				break;
-			default:
-				System.out.println();
-				System.out.println("감사합니다");
-				System.exit(0);
-			}
-
-		}
-
-	}
-
-	public static void main(String[] args) {
-		new LottoTest().home();
+		return scan.nextInt();
 	}
 
 }
