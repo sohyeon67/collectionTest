@@ -50,6 +50,31 @@ public class EnumTest {
 	public enum Color {RED, GREEN, BLUE}
 	
 	public enum Count {ONE, TWO, THREE}
+	
+	public enum Season {
+		// 상수명(값들) 형식의 선언
+		봄("3월부터 5월까지", 13), 여름("6월부터 8월까지", 25), 
+		가을("9월부터 11월까지", 15), 겨울("12월부터 2월까지", 1);
+		
+		// 값들이 저장될 변수 선언
+		private String span;
+		private int temp;
+		
+		// 생성자
+		Season(String span, int temp) {	// private Season(String span, int temp) 와 같다.
+			this.span = span;
+			this.temp = temp;
+		}
+		
+		// getter메서드 작성
+		public String getSpan() {
+			return span;
+		}
+		
+		public int getTemp() {
+			return temp;
+		}
+	}
 
 	public static void main(String[] args) {
 		/*
@@ -95,6 +120,18 @@ public class EnumTest {
 		
 		
 		System.out.println("---------------------------------------");
+		
+		Season ss = Season.valueOf("봄");
+		System.out.println("name : " + ss.name());
+		System.out.println("ordinal : " + ss.ordinal());
+		System.out.println("span : " + ss.getSpan());
+		System.out.println("temp : " + ss.getTemp());
+		System.out.println();
+		
+		for(Season time : Season.values()) {
+			System.out.println(time.name() + "==" + time + " ==> ( "
+					+ time.getSpan() + ", " + time.getTemp() + " )");
+		}
 	}
 
 }
