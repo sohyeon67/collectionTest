@@ -58,7 +58,7 @@ public class ThreadTest12 {
 		Collections.sort(horseList);
 		
 		for(Horse h : horseList) {
-			System.out.print(h.getRanking() + "등 : " + h.getHorseName());
+			System.out.println(h.getRanking() + "등 : " + h.getHorseName());
 		}
 
 	}
@@ -69,6 +69,7 @@ class Horse extends Thread implements Comparable<Horse> {
 	private String horseName;
 	private int ranking;
 	private int position;
+	private static int rankCount;
 	
 	// 생성자
 	public Horse(String horseName) {
@@ -125,7 +126,11 @@ class Horse extends Thread implements Comparable<Horse> {
 				// TODO: handle exception
 			}
 		}
-		System.out.println(horseName + " 말 도착");
+		System.out.println(horseName + " 말 도착!");
+		rankCount++;
+		setRanking(rankCount);
 	}
 
 }
+
+
