@@ -28,66 +28,66 @@ import javax.swing.JOptionPane;
  */
 
 public class ThreadTest07 {
+	public static boolean inputCheck;
+
 
 	public static void main(String[] args) {
-		Thread th1 = new DataInput2();
-		Thread th2 = new CountDown2();
+		GameCountDown gcd = new GameCountDown();
 		
-		th1.start();
-		th2.start();
+		// 난수를 이용하여 컴퓨터의 가위 바위 보 정하기
+		String[] data = {"가위", "바위", "보"};
+		int index = (int)(Math.random() * 3);	// 0 ~ 2 사이의 난수 만들기
+		String com = data[index];		// 컴퓨터의 가위 바위 보를 정한다.
+		
+		// 사용자로부터 가위 바위 보 입력 받기
+		gcd.start();	// 카운트 다운 쓰레드 작동 시작...
+		String man = null;
+		do {
+			man = JOptionPane.showInputDialog("가위 바위 보를 입력하세요...");
+//		} while(!("가위".equals(man) || "바위".equals(man) || "보".equals(man)));
+		} while(!"가위".equals(man) && !"바위".equals(man) && !"보".equals(man));
+		
+		inputCheck = true;
+		
+		// 결과 판정하기
+		String result = "";
+		
+		if(man.equals(com)) {
+			result = "비겼습니다.";
+		} else if(man.equals("가위") && com.equals("보") || 
+					man.equals("바위") && com.equals("가위") ||
+					man.equals("보") && com.equals("바위")) {
+			result = "당신이 이겼습니다.";
+		} else {
+			result = "당신이 졌습니다.";
+		}
+		
+		// 결과 출력
+		System.out.println("  -- 결 과 --");
+		System.out.println("컴퓨터 : " + com);
+		System.out.println("당 신 : " + man);
+		System.out.println("결 과 : " + result);
 	}
 
 }
 
-//데이터를 입력하는 쓰레드 클래스
-class DataInput2 extends Thread {
-	// 입력 완료 여부를 확인하기 위한 변수 선언 (쓰레드에서 공통으로 사용할 변수)
-	public static boolean inputCheck = false;
-	
-	
+class GameCountDown extends Thread {
 	@Override
 	public void run() {
-		int com = (int)(Math.random()*3+1);
-		String comInput = (com == 1)? "가위" : (com == 2? "바위" : "보");
-		
-		String userInput = JOptionPane.showInputDialog("입력하세요...");
-		inputCheck = true;	// 입력이 완료되면 inputCheck변수를 true로 변경한다.
-		
-		int user = (userInput.equals("가위"))? 1 : (userInput.equals("바위")? 2 : 3);
-		int result = user-com;	//0:비김 1,-2:이김 -1,2:짐 
-		
-		System.out.println("-- 결과 --");
-		System.out.println("컴퓨터 : " + comInput);
-		System.out.println("당  신 : " + userInput);
-		if(result==0)
-			System.out.println("결  과 : 비겼습니다.");
-		else if(result==1 || result==-2)
-			System.out.println("결  과 : 당신이 이겼습니다.");
-		else
-			System.out.println("결  과 : 당신이 졌습니다.");
-
-	}
-}
-
-//카운트 다운을 진행하는 쓰레드 클래스
-class CountDown2 extends Thread {
-	@Override
-	public void run() {
+		System.out.println("카운트 다운 시작...");
 		for(int i=5; i>=1; i--) {
-			// 입력이 완료되었는지 여부를 검사한다.
-			// ==> 입력이 완료되면 쓰레드를 종료시킨다.
-			if(DataInput2.inputCheck == true) {
+			if(ThreadTest07.inputCheck == true) {
 				return;		// run()메서드가 종료되면 쓰레드도 종료된다.
 			}
-			
 			System.out.println(i);
+			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO: handle exception
 			}
 		}
-		System.out.println("-- 결과 --");
+		System.out.println("  -- 결 과 --");
 		System.out.println("시간 초과로 당신이 졌습니다...");
 		System.exit(0);
 	}
