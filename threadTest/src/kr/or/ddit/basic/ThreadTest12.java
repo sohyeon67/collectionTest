@@ -123,7 +123,6 @@ class Horse extends Thread implements Comparable<Horse> {
 			}
 			
 		}
-		System.out.println(horseName + " 말 도착!");
 		rankCount++;
 		setRanking(rankCount);
 	}
