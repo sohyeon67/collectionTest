@@ -50,6 +50,8 @@ public class ThreadTest12 {
 			}
 		}
 		
+		gb.interrupt();
+		
 		try {
 			gb.join();
 		} catch (InterruptedException e) {
@@ -167,9 +169,15 @@ class GameBoard extends Thread{
 	public void run() {
 		while(true) {
 			// 모들 말들의 경기가 종료 되었는지 여부를 검사한다.
-			if(Horse.currentRank==horses.length) {
+//			if(Horse.currentRank==horses.length) {
+//				break;
+//			}
+			
+			// interrupt()메서드를 이용한 종료 처리
+			if(this.isInterrupted()) {
 				break;
 			}
+			
 			
 			// 각 텀 사이의 빈줄 출력
 			for(int i=1; i<=15; i++) {
@@ -195,7 +203,7 @@ class GameBoard extends Thread{
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO: handle exception
+				this.interrupt();
 			}
 			
 			
@@ -205,3 +213,8 @@ class GameBoard extends Thread{
 	
 	
 }
+
+
+
+
+
