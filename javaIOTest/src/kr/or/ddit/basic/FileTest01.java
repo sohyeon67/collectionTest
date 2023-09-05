@@ -41,10 +41,14 @@ public class FileTest01 {
 		System.out.println();
 		System.out.println("-------------------------------------------------");
 		
+		
 		// 디렉토리(폴더) 만들기
 		/*
 		 - mkdir() ==> File객체 전체의 경로 중 마지막 위치의 디렉토리를 만든다.
 		 		==> 반환값 : 만들기 성공(true), 만들기 실패(false)
+		 		==> 전체 경로 중 중간부분의 경로가 모두 만들어져 있어야
+		 			마지막 위치의 디렉토리(폴더)를 만들 수 있다.
+		 - mkdirs() ==> 중간 부분의 경로가 없으면 중간 부분의 경로도 같이 만들어준다.
 		 */
 		File file5 = new File("d:d_other/연습용");
 		System.out.println(file5.getName() + "의 존재 여부 : " + file5.exists());
@@ -55,6 +59,16 @@ public class FileTest01 {
 			} else {
 				System.out.println(file5.getName() + " 만들기 실패~~~");
 			}
+		}
+		System.out.println();
+		
+		File file6 = new File("d:/d_other/test/java/src");
+		System.out.println(file6.getName() + "의 존재 여부 : " + file6.exists());
+		
+		if(file6.mkdirs()) {
+			System.out.println(file6.getName() + " 만들기 성공 !!!");
+		} else {
+			System.out.println(file6.getName() + " 만들기 실패~~~");
 		}
 	}
 
