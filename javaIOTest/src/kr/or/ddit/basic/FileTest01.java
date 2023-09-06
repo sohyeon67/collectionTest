@@ -50,7 +50,7 @@ public class FileTest01 {
 		 			마지막 위치의 디렉토리(폴더)를 만들 수 있다.
 		 - mkdirs() ==> 중간 부분의 경로가 없으면 중간 부분의 경로도 같이 만들어준다.
 		 */
-		File file5 = new File("d:d_other/연습용");
+		File file5 = new File("d:/d_other/연습용");
 		System.out.println(file5.getName() + "의 존재 여부 : " + file5.exists());
 		
 		if(!file5.exists()) {
