@@ -84,7 +84,8 @@ public class JdbcTest03 {
 			e.printStackTrace();
 		} finally {
 			if(rs!=null) try { rs.close(); }catch(SQLException e) {}
-			if(stmt!=null) try { stmt.close(); }catch(SQLException e) {}
+//			if(stmt!=null) try { stmt.close(); }catch(SQLException e) {}
+			if(pstmt!=null) try { stmt.close(); }catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); }catch(SQLException e) {}
 		}
 
