@@ -77,14 +77,13 @@ public class JdbcTest06 {
 			String id = null;
 			int count = 0;
 			
+			String sql1 = "select count(*) cnt from mymember "
+					+ "where mem_id = ?";
+			pstmt = conn.prepareStatement(sql1);
 			do {
 				System.out.print("회원 ID >> ");
 				id = scan.next();
 				
-				String sql1 = "select count(*) cnt from mymember "
-						+ "where mem_id = ?";
-				
-				pstmt = conn.prepareStatement(sql1);
 				pstmt.setString(1, id);
 				
 				rs = pstmt.executeQuery();
