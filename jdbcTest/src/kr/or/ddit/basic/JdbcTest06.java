@@ -43,10 +43,6 @@ public class JdbcTest06 {
 	
 	// 시작 메서드
 	public void startMember() {
-		System.out.println("**********************");
-		System.out.println("      프 로 그 램 시 작");
-		System.out.println("**********************");
-		
 		while(true) {
 			int choice = displayMenu();
 			switch(choice) {
@@ -270,7 +266,6 @@ public class JdbcTest06 {
 			} else {
 				System.out.println(id + "회원 정보 수정 실패~~~");
 			}
-			System.out.println();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -324,7 +319,6 @@ public class JdbcTest06 {
 			} else {
 				System.out.println(id + "회원 정보 수정 실패~~~");
 			}
-			System.out.println();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
