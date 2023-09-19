@@ -15,7 +15,8 @@ public class MemberController {
 
 	// 생성자
 	public MemberController() {
-		service = new MemberServiceImpl();
+		//service = new MemberServiceImpl();
+		service = MemberServiceImpl.getInstance();
 		scan = new Scanner(System.in);
 	}
 
