@@ -35,13 +35,18 @@ public class BoardServiceImpl implements IBoardService {
 	}
 
 	@Override
-	public BoardVO searchBoard(String title) {
+	public List<BoardVO> searchBoard(String title) {
 		return dao.searchBoard(title);
 	}
 
 	@Override
 	public List<BoardVO> getAllBoard() {
 		return dao.getAllBoard();
+	}
+
+	@Override
+	public int addCnt(int no) {
+		return dao.addCnt(no);
 	}
 
 }

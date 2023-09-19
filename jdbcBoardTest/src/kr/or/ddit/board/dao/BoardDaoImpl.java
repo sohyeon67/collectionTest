@@ -131,22 +131,25 @@ public class BoardDaoImpl implements IBoardDao {
 	}
 
 	@Override
-	public BoardVO searchBoard(String title) {
+	public List<BoardVO> searchBoard(String title) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		BoardVO boardVo = null;
+		List<BoardVO> boardList = null;
 		
 		try {
 			conn = DBUtil3.getConnection();
-			String sql = "select * from jdbc_board where board_title = ?";
+			String sql = "select * from jdbc_board where board_title like ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, title);
+			pstmt.setString(1, "%" + title + "%");
 			
 			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				boardVo = new BoardVO();
+			while(rs.next()) {
+				if(boardList==null) boardList = new ArrayList<BoardVO>();
+				
+				// 한 개의 레코드가 저장될 VO객체 생성
+				BoardVO boardVo = new BoardVO();
 				
 				// ResultSet에서 각 컬럼들을 가져와 VO의 멤버변수에 저장한다.
 				boardVo.setNo(rs.getInt("board_no"));
@@ -155,6 +158,9 @@ public class BoardDaoImpl implements IBoardDao {
 				boardVo.setDate(rs.getDate("board_date"));
 				boardVo.setCnt(rs.getInt("board_cnt"));
 				boardVo.setContent(rs.getString("board_content"));
+				
+				// 구성된 VO객체를 List에 추가한다.
+				boardList.add(boardVo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,7 +170,7 @@ public class BoardDaoImpl implements IBoardDao {
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
 		}
 		
-		return boardVo;
+		return boardList;
 	}
 
 	@Override
@@ -207,6 +213,30 @@ public class BoardDaoImpl implements IBoardDao {
 		}
 		
 		return boardList;
+	}
+
+	@Override
+	public int addCnt(int no) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		
+		try {
+			conn = DBUtil3.getConnection();
+			String sql = "update jdbc_board set board_cnt = board_cnt + 1 where board_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			cnt = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
+			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+		}
+		
+		return cnt;
 	}
 
 }

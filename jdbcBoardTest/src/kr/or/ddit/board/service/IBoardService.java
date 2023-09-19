@@ -51,9 +51,9 @@ public interface IBoardService {
 	 * 제목을 매개변수로 받아서 해당 게시물을 검색하는 메서드
 	 * 
 	 * @param title 검색할 제목
-	 * @return BoardVO객체
+	 * @return BoardVO객체가 저장된 List
 	 */
-	public BoardVO searchBoard(String title);
+	public List<BoardVO> searchBoard(String title);
 	
 	/**
 	 * DB에 저장된 전체 게시물 정보를 가져와서 List에 담아서 반환하는 메서드
@@ -61,4 +61,11 @@ public interface IBoardService {
 	 * @return BoardVO객체가 저장된 List
 	 */
 	public List<BoardVO> getAllBoard();
+	
+	/**
+	 * 게시물 조회수를 증가시키는 메서드
+	 * @param BoardVo 
+	 * @return 작업성공 : 1, 작업실패 : 0
+	 */
+	public int addCnt(int no);
 }

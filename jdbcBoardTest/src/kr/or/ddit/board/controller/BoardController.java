@@ -33,7 +33,7 @@ public class BoardController {
 				detailBoard();
 				break;
 			case 3:
-				//searchBoard();
+				searchBoard();
 				break;
 			case 0:
 				System.out.println();
@@ -46,10 +46,40 @@ public class BoardController {
 		}
 	}
 	
+	private void searchBoard() {
+		System.out.println("검색 작업");
+		System.out.println("--------------------------------------------");
+		System.out.print("- 검색할 제목 입력 : ");
+		String title = scan.nextLine();
+		List<BoardVO> boardList = service.getAllBoard();
+		
+		if(title.equals("")) {
+			displayAllBoard();
+		} else {
+			boardList = service.searchBoard(title);
+			
+			System.out.println();
+			System.out.println("-------------------------------------------------------------");
+			System.out.println(" No	        제 목            작성자 	조회수   ");
+			System.out.println("-------------------------------------------------------------");
+			
+			if(boardList==null || boardList.size()==0) {
+				System.out.println("\t해당 게시물이 존재하지 않습니다.");
+			} else {
+				for(BoardVO boardVo : boardList) {
+					System.out.println(boardVo.getNo() + "\t" + boardVo.getTitle() + "\t" 
+										+ boardVo.getWriter() + "\t" + boardVo.getCnt());
+				}
+			}
+			System.out.println("-------------------------------------------------------------");
+		}
+	}
+	
 	private void detailBoard() {
 		System.out.print("보기를 원하는 게시물 번호 입력 >> ");
 		int no = scan.nextInt();
 		
+		service.addCnt(no);
 		BoardVO boardVo = service.detailBoard(no);
 		
 		System.out.println();
@@ -107,13 +137,17 @@ public class BoardController {
 		} else {
 			System.out.println(no + "번글이 수정되지 않았습니다.");
 		}
-				
-		
 	
 	}
 	
 	private void deleteBoard(int no) {
+		int cnt = service.deleteBoard(no);
 		
+		if (cnt > 0) {
+			System.out.println(no + "번글이 삭제되었습니다.");
+		} else {
+			System.out.println(no + "번글이 삭제되지 않았습니다.");
+		}
 	}
 	
 	private void insertBoard() {
