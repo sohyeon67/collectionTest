@@ -1,38 +1,30 @@
-package kr.or.ddit.member.dao;
+package kr.or.ddit.board.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.util.MybatisUtil;
-import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.JdbcBoardVO;
 
-public class MemberDaoImpl implements IMemberDao {
-	// 1번
-	private static MemberDaoImpl dao;
+public class JdbcBoardDaoImpl implements IJdbcBoardDao {
+	private static JdbcBoardDaoImpl dao;
 	
-	// 2번
-	private MemberDaoImpl() {}
+	private JdbcBoardDaoImpl() { }
 	
-	// 3번
-	public static MemberDaoImpl getInstance() {
-		if(dao==null) dao = new MemberDaoImpl();
-		
+	public static JdbcBoardDaoImpl getInstance() {
+		if(dao == null) dao = new JdbcBoardDaoImpl();
 		return dao;
 	}
-
+	
 	@Override
-	public int insertMember(MemberVO memVo) {
+	public int insertBoard(JdbcBoardVO boardVo) {
 		SqlSession session = null;
 		int cnt = 0;	// 반환값이 저장될 변수
-		
 		try {
 			session = MybatisUtil.getSqlSession();
 			
-			cnt = session.insert("member.insertMember", memVo);
+			cnt = session.insert("board.insertBoard", boardVo);
 			
 			// insert, update, delete작업이 성공하면 commit()을 처리한다.
 			if(cnt>0) session.commit();
@@ -47,36 +39,14 @@ public class MemberDaoImpl implements IMemberDao {
 	}
 
 	@Override
-	public int deleteMember(String memId) {
+	public int deleteBoard(int boardNo) {
 		SqlSession session = null;
-		int cnt = 0;
-		
+		int cnt = 0;	// 반환값이 저장될 변수
 		try {
 			session = MybatisUtil.getSqlSession();
 			
-			cnt = session.delete("member.deleteMember", memId);
-			
-			// insert, update, delete작업이 성공하면 commit()을 처리한다.
-			if(cnt>0) session.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(session!=null) session.close();
-		}
-		return cnt;
-	}
+			cnt = session.delete("board.deleteBoard", boardNo);
 
-	@Override
-	public int updateMember(MemberVO memVo) {
-		SqlSession session = null;
-		int cnt = 0;
-		
-		try {
-			session = MybatisUtil.getSqlSession();
-			
-			cnt = session.update("member.updateMember", memVo);
-			
 			// insert, update, delete작업이 성공하면 commit()을 처리한다.
 			if(cnt>0) session.commit();
 			
@@ -90,53 +60,15 @@ public class MemberDaoImpl implements IMemberDao {
 	}
 
 	@Override
-	public List<MemberVO> getAllMember() {
+	public int updateBoard(JdbcBoardVO boardVo) {
 		SqlSession session = null;
-		List<MemberVO> memList = null;	// 반환값이 저장될 변수
-		
+		int cnt = 0;	// 반환값이 저장될 변수
 		try {
 			session = MybatisUtil.getSqlSession();
 			
-			memList = session.selectList("member.getAllMember");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(session!=null) session.close();
-		}
-		
-		return memList;
-	}
+			cnt = session.update("board.updateBoard", boardVo);
 
-	@Override
-	public int getMemIdCount(String memId) {
-		SqlSession session = null;
-		int count = 0;
-		
-		try {
-			session = MybatisUtil.getSqlSession();
-			
-			count = session.selectOne("member.getMemIdCount", memId);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if(session!=null) session.close();
-		}
-		
-		return count;
-	}
-
-	@Override
-	public int updateMember2(Map<String, String> paramMap) {
-		SqlSession session = null;
-		int cnt = 0;
-		
-		// key값 정보 ==> 회원ID(memid), 수정할컬럼명(field), 수정할데이터(data)
-		try {
-			session = MybatisUtil.getSqlSession();
-			cnt = session.update("member.updateMember2", paramMap);
-			
+			// insert, update, delete작업이 성공하면 commit()을 처리한다.
 			if(cnt>0) session.commit();
 			
 		} catch (Exception e) {
@@ -147,5 +79,77 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		return cnt;
 	}
-	
+
+	@Override
+	public List<JdbcBoardVO> getAllBoard() {
+		SqlSession session = null;
+		List<JdbcBoardVO> boardList = null;	// 반환값이 저장될 변수
+		
+		try {
+			session = MybatisUtil.getSqlSession();
+			boardList = session.selectList("board.getAllBoard");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		
+		return boardList;
+	}
+
+	@Override
+	public JdbcBoardVO getBoard(int boardNo) {
+		SqlSession session = null;
+		JdbcBoardVO boardVo = null;	// 반환값이 저장될 변수
+		
+		try {
+			session = MybatisUtil.getSqlSession();
+			boardVo = session.selectOne("board.getBoard", boardNo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		
+		return boardVo;
+	}
+
+	@Override
+	public List<JdbcBoardVO> getSearchBoard(String title) {
+		SqlSession session = null;
+		List<JdbcBoardVO> boardList = null;	// 반환값이 저장될 변수
+		
+		try {
+			session = MybatisUtil.getSqlSession();
+			boardList = session.selectList("board.getSearchBoard", title);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		
+		return boardList;
+	}
+
+	@Override
+	public int setCountIncrement(int boardNo) {
+		SqlSession session = null;
+		int cnt = 0;	// 반환값이 저장될 변수
+		try {
+			session = MybatisUtil.getSqlSession();
+			
+			cnt = session.update("board.setCountIncrement", boardNo);
+
+			// insert, update, delete작업이 성공하면 commit()을 처리한다.
+			if(cnt>0) session.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(session!=null) session.close();
+		}
+		
+		return cnt;
+	}
+
 }

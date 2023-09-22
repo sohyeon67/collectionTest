@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import kr.or.ddit.util.DBUtil3;
 import kr.or.ddit.vo.MemberVO;
 
 public class MemberDaoImpl implements IMemberDao {
+	private static final Logger logger = Logger.getLogger(MemberDaoImpl.class);
+	
 	// 1번
 	private static MemberDaoImpl dao;
 	
@@ -33,6 +37,8 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료...");
+			
 			String sql = "insert into mymember (mem_id, mem_pass, mem_name, mem_tel, mem_addr) "
 					+ "values(?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
@@ -42,13 +48,22 @@ public class MemberDaoImpl implements IMemberDao {
 			pstmt.setString(4, memVo.getMem_tel());
 			pstmt.setString(5, memVo.getMem_addr());
 			
+			logger.debug("PreparedStatement객체 생성완료...");
+			logger.debug("실행 SQL : " + sql);
+			logger.debug("사용 데이터 [" + memVo.getMem_id() + ", " 
+					+ memVo.getMem_pass() + ", " + memVo.getMem_name() + ", "
+					+ memVo.getMem_tel() + ", " + memVo.getMem_addr() + "]");
+			
 			cnt = pstmt.executeUpdate();
+			logger.info("실행 작업 성공~~~");
 			
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		
 		return cnt;
@@ -62,17 +77,26 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료...");
+			
 			String sql = "delete from mymember where mem_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memId);
 			
+			logger.debug("PreparedStatement객체 생성완료...");
+			logger.debug("실행 SQL : " + sql);
+			logger.debug("사용 데이터 [" + memId + "]");
+			
 			cnt = pstmt.executeUpdate();
+			logger.info("실행 작업 성공~~~");
 			
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		return cnt;
 	}
@@ -85,6 +109,8 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료");
+			
 			String sql = "update mymember set "
 					+ " mem_pass = ?, mem_name = ?, mem_tel = ?, mem_addr = ? "
 					+ " where mem_id = ?";
@@ -95,13 +121,22 @@ public class MemberDaoImpl implements IMemberDao {
 			pstmt.setString(4, memVo.getMem_addr());
 			pstmt.setString(5, memVo.getMem_id());
 			
+			logger.debug("PreparedStatement객체 생성완료...");
+			logger.debug("실행 SQL : " + sql);
+			logger.debug("사용 데이터 [" + memVo.getMem_pass() + ", " 
+					+ memVo.getMem_name() + ", " + memVo.getMem_tel() + ", "
+					+ memVo.getMem_addr() + ", " + memVo.getMem_id() + "]");
+			
 			cnt = pstmt.executeUpdate();
+			logger.error("실행 작업 성공~~~");
 			
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		
 		return cnt;
@@ -116,10 +151,16 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료...");
+			
 			String sql = "select * from mymember";
 			pstmt = conn.prepareStatement(sql);
 			
+			logger.debug("PreparedStatement객체 생성완료...");
+			logger.debug("실행 SQL : " + sql);
+			
 			rs = pstmt.executeQuery();
+			logger.info("실행 작업 성공~~~");
 			
 			while(rs.next()) {
 				if(memList==null) memList = new ArrayList<MemberVO>();
@@ -138,11 +179,13 @@ public class MemberDaoImpl implements IMemberDao {
 				memList.add(memVo);
 			}
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(rs!=null) try { rs.close(); } catch(SQLException e) {}
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		
 		return memList;
@@ -158,21 +201,30 @@ public class MemberDaoImpl implements IMemberDao {
 		
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료...");
+			
 			String sql = "select count(*) cnt from mymember where mem_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memId);
 			
+			logger.debug("PreparedStatement객체 생성 완료...");
+			logger.debug("실행 SQL : " + sql);
+			logger.debug("사용 데이터 [" + memId + "]");
+			
 			rs = pstmt.executeQuery();
+			logger.info("실행 작업 성공~~~");
 			
 			if(rs.next()) {
 				count = rs.getInt("cnt");
 			}
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(rs!=null) try { rs.close(); } catch(SQLException e) {}
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		
 		return count;
@@ -187,19 +239,27 @@ public class MemberDaoImpl implements IMemberDao {
 		// key값 정보 ==> 회원ID(memid), 수정할컬럼명(field), 수정할데이터(data)
 		try {
 			conn = DBUtil3.getConnection();
+			logger.info("Connection객체 생성 완료...");
+			
 			String sql = "update mymember set " + paramMap.get("field") + " = ? "
 					+ " where mem_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, paramMap.get("data"));
 			pstmt.setString(2, paramMap.get("memid"));
 			
+			logger.debug("PreparedStatement객체 생성완료...");
+			logger.debug("실행 SQL : " + sql);
+			logger.debug("사용 데이터 [" + paramMap.get("data") + ", " + paramMap.get("memid") + "]");
 
 			cnt = pstmt.executeUpdate();
+			logger.info("실행 작업 성공~~~");
 		} catch (SQLException e) {
+			logger.error("실행 작업 실패!!!", e);
 			e.printStackTrace();
 		} finally {
 			if(pstmt!=null) try { pstmt.close(); } catch(SQLException e) {}
 			if(conn!=null) try { conn.close(); } catch(SQLException e) {}
+			logger.info("자원 반납 완료~~~");
 		}
 		
 		return cnt;
