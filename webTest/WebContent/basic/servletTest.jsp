@@ -8,7 +8,8 @@
 <script>
 window.onload = function() {
 	document.getElementById("getBtn").addEventListener("click", function() {
-		location.href = "http://localhost/webTest/servletTest03.do";
+		//location.href = "http://localhost/webTest/servletTest03.do";
+		location.href = "<%= request.getContextPath() %>/servletTest03.do";
 	});
 }
 </script>
@@ -18,7 +19,7 @@ window.onload = function() {
 <br><hr><br>
 
 <h3>GET방식 요청하기1 ==> 링크 방식</h3>
-<a href="http://localhost/webTest/servletTest03.do">Get방식 요청 1</a>
+<a href="<%= request.getContextPath() %>/servletTest03.do">Get방식 요청 1</a>
 <br><hr><br>
 
 <h3>GET방식 요청하기2 ==> form태그의 method속성 이용하기</h3>
@@ -28,7 +29,7 @@ window.onload = function() {
 				문서명을 지정하는 속성
 	method속성 ==> get 또는 post (이 속성이 생략되면 기본적으로 GET방식으로 처리된다.)
  -->
-<form action="http://localhost/webTest/servletTest03.do" method="get">
+<form action="<%= request.getContextPath() %>/servletTest03.do" method="get">
 	<input type="submit" value="Get방식 요청2">
 </form>
 <br><hr><br>
@@ -40,7 +41,7 @@ window.onload = function() {
 <br><hr><br>
 
 <h3>POST방식 요청하기 ==> form태그의 method속성을 'post'로 지정한 경우</h3>
-<form action="http://localhost/webTest/servletTest03.do" method="post">
+<form action="<%= request.getContextPath() %>/servletTest03.do" method="post">
 	<input type="submit" value="POST방식 요청">
 </form>
 

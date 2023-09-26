@@ -46,9 +46,18 @@ public class ServletTest03 extends HttpServlet {
 		// GET방식과 POST방식에 맞는 메서드 호출하기
 		
 		// 방법1 ==> 부모 클래스인 HttpServlet의 service()메서드에 위임하기
-		super.service(request, response);
+		//super.service(request, response);
 		
+		// 방법2 ==> 클라이언트의 전송 방식(GET, POST 등)을 구분해서 직접 메서드 호출하기
+		//			HttpServletRequest객체의 getMethod()메서드를 이용한다.
+		String method = request.getMethod();
+		System.out.println("method => " + method);
 		
+		if("GET".equals(method)) {
+			doGet(request, response);
+		} else {
+			doPost(request, response);
+		}
 	}
 	
 	@Override
