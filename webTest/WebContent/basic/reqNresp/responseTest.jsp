@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>forward방식, Redirect방식 연습</h3>
+<h3>Forward방식, Redirect방식 연습</h3>
 <br><hr><br>
 
 <form action="<%=request.getContextPath()%>/responseTest01.do" method="post">

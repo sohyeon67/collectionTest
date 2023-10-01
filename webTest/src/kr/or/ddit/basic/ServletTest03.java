@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *    (doGet(), doPost(), doPut(), doDelete() 등)
  * 5. 요청 및 응답 처리가 모두 완료되면 HttpServletRequest객체와 HttpServletResponse객체는
  *    자동으로 소멸된다.
- * 6. 컨테이너로부터 서블릿이 제거되는 경우에는 destroy()메서드가 호출되낟.
+ * 6. 컨테이너로부터 서블릿이 제거되는 경우에는 destroy()메서드가 호출된다.
  * 
  */
 
