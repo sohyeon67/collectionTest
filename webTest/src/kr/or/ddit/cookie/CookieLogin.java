@@ -16,35 +16,37 @@ public class CookieLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out = response.getWriter();
 		
-		String userId = request.getParameter("id");
+		// userid, pass, chkid 파라미터의 값을 구한다.
+		String userId = request.getParameter("userid");
 		String userPass = request.getParameter("pass");
-		String check = request.getParameter("check");
+		String chkId = request.getParameter("chkid");	// checkbox의 값
 		
-		// 체크하고 로그인하면 id를 쿠키에 저장, 쿠키에 id값이 저장되어 있으면 id가 나타나도록 함. 체크박스 유지
-		if(check!=null) {
-			Cookie idCookie = new Cookie("id", userId);
-			response.addCookie(idCookie);
-		} else {
-			// 해제하고 로그인하면 쿠키의 id를 삭제하고 체크박스 해제
-			Cookie[] cookieArr = request.getCookies();
-			for(Cookie cookie : cookieArr) {
-				if("id".equals(cookie.getName())) {
-					cookie.setMaxAge(0);
-					response.addCookie(cookie);
-				}
-			}
+		// userid값을 갖는 Cookie객체 생성
+		Cookie loginCookie = new Cookie("USERID", userId);
+		
+		if(chkId==null) { // 체크박스가 체크되지 않으면...
+			loginCookie.setMaxAge(0);	// Cookie를 삭제하기 위해서 유지시간을 0으로 설정
 		}
+		
+		// 쿠키를 다시 저장한다.
+		response.addCookie(loginCookie);
+		
+		String contextPath = request.getContextPath();
 		
 		// id: test, pass: 1234
 		// 로그인 성공 cookieMain.jsp, 실패 cookieLogin.jsp
 		if(userId.equals("test") && userPass.equals("1234")) {
-			request.getRequestDispatcher("/basic/cookie/cookieMain.jsp").forward(request, response);;
+			// Dispatcher하면 딜레이 생김..?
+			
+			response.sendRedirect(contextPath + "/basic/cookie/cookieMain.jsp");
+			//request.getRequestDispatcher("/basic/cookie/cookieMain.jsp").forward(request, response);;
 		} else {
-			request.getRequestDispatcher("/basic/cookie/cookieLogin.jsp").forward(request, response);;
+			response.sendRedirect(contextPath + "/basic/cookie/cookieLogin.jsp");
+			//request.getRequestDispatcher("/basic/cookie/cookieLogin.jsp").forward(request, response);;
 		}
 		
 	}
