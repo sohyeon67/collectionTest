@@ -8,6 +8,6 @@
 </head>
 <body>
 <h3>cookie연습용 main페이지 입니다.</h3>
-<a href="<%=request.getContextPath() %>/cookieLoginServlet.do">Login 창으로 이동</a><br><br>
+<a href="<%=request.getContextPath() %>/basic/cookie/cookieLogin.jsp">Login 창으로 이동</a><br><br>
 </body>
 </html>
