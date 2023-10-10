@@ -7,4 +7,32 @@
 	<select id="getLoginMember" parameterType="memVo" resultType="memVo">
 		select * from mymember where mem_id = #{mem_id} and mem_pass = #{mem_pass}
 	</select>
+	
+	<insert id="insertMember" parameterType="memVo">
+		insert into mymember (mem_id, mem_pass, mem_name, mem_tel, mem_addr)
+		values(#{mem_id}, #{mem_pass}, #{mem_name}, #{mem_tel}, #{mem_addr})
+	</insert>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from mymember where mem_id = #{mem_id}
+	</delete>
+	
+	<update id="updateMember" parameterType="memVo">
+		update mymember set
+			mem_pass = #{mem_pass}, mem_name = #{mem_name}, 
+			mem_tel = #{mem_tel}, mem_addr = #{mem_addr}
+		where mem_id = #{mem_id}
+	</update>
+	
+	<select id="getAllMember" resultType="memVo">
+		select * from mymember
+	</select>
+	
+	<select id="getMemIdCount" parameterType="String" resultType="int">
+		select count(*) cnt from mymember where mem_id = #{mem_id}
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="memVo">
+		select * from mymember where mem_id = #{mem_id}
+	</select>
 </mapper>
