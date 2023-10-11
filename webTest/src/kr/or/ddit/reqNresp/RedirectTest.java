@@ -31,7 +31,7 @@ public class RedirectTest extends HttpServlet {
 		out.println("<head><meta charset='utf-8'><title>Redirect연습</title></head>");
 		out.println("<body>");
 		
-		out.println("<h3>Forward 결과</h3>");
+		out.println("<h3>Redirect 결과</h3>");
 		out.println("<table border='1'>");
 		out.println("<tr><td>이름</td>");
 		out.println("<td>" + userName + "</td></tr>");
